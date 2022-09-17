@@ -6,11 +6,10 @@ name = "pypi"
 [packages]
 django = "*"
 djangorestframework = "*"
-mysqlclient = "*"
 pillow = "*"
 django-debug-toolbar = "*"
 django-smart-selects = "*"
-psycopg2-binary = "*"
+mysqlclient = "*"
 
 [dev-packages]
 

@@ -84,12 +84,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',  
+        'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'ecommerce',  
         'HOST': 'localhost',
-        'USER': 'postgres',
-        'PORT': '5432',  
-        'PASSWORD': 'P@$$word',  
+        'USER': 'smartsolution',
+        'PORT': '3306',  
+        'PASSWORD': 'admin@123',  
     }
 }
 
