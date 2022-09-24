@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-$+&h0h@n7z4&ns#9m$^e41-0qu787d)2-948v6t7j@9kxa%08l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['smartsolution.pythonanywhere.com', '*']
 
 
 # Application definition
@@ -129,7 +129,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
+MEDIA_ROOT = '/home/smartsolution/backend/media/'
+MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
