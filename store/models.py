@@ -1,67 +1,64 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from smart_selects.db_fields import ChainedForeignKey
+from autoslug import AutoSlugField
 
-class Collections(models.Model):
-    collectionName = models.CharField(max_length=255)
-    collectionImage = models.ImageField(upload_to='collections', blank=True)
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='collections', blank=True)
     def __str__(self) -> str:
-        return self.collectionName
+        return self.name
     class Meta:
-        ordering = ['collectionName']
+        ordering = ['name']
 
-class SubCollections(models.Model):
-    subCollectionName = models.CharField(max_length=255)
-    subCollectionMainCollection = models.ForeignKey(Collections, on_delete=models.PROTECT)
-    subcollectionImage = models.ImageField(upload_to='subCollections', blank=True)
+class SubCategory(models.Model):
+    name = models.CharField(max_length=255)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    image = models.ImageField(upload_to='subCollection', blank=True)
     def __str__(self) -> str:
-        return self.subCollectionName
+        return self.name
     class Meta:
-        ordering = ['subCollectionName']
+        ordering = ['name']
 
-class Products(models.Model):
-    productName = models.CharField(max_length=255)
-    productPrice = models.DecimalField(max_digits=8, decimal_places=2)
-    productSlug = models.SlugField()
-    productAvailability = models.BooleanField(default=False)
-    productDescription = models.TextField(null=True, blank=True)
-    productSKU = models.CharField(max_length=255, null=True, blank=True)
-    productCollection = models.ForeignKey(Collections, on_delete=models.PROTECT, related_name='products')
-    productSubCollection = ChainedForeignKey(SubCollections, chained_field='productCollection', chained_model_field='subCollectionMainCollection')
-    productBrand = models.ForeignKey("Brands", on_delete=models.PROTECT, related_name='products', null=True, blank=True)
-    productModel = models.CharField(max_length=255, null=True, blank=True)
-    productLastUpdate = models.DateTimeField(auto_now=True)
-    productRating = models.SmallIntegerField()
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    afterPrice = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
+    isDiscount = models.BooleanField(default=False)
+    isNew = models.BooleanField(default=False)
+    slug = AutoSlugField(populate_from='name')
+    availability = models.BooleanField(default=False)
+    description = models.TextField(null=True, blank=True)
+    sku = models.CharField(max_length=255, null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='product')
+    subCategory = ChainedForeignKey(SubCategory, chained_field='category', chained_model_field='category')
+    brand = models.ForeignKey("Brand", on_delete=models.PROTECT, related_name='product', null=True, blank=True)
+    model = models.CharField(max_length=255, null=True, blank=True)
+    lastUpdate = models.DateTimeField(auto_now=True)
+    rating = models.SmallIntegerField()
     def __str__(self) -> str:
-        return self.productName
+        return self.name
     
     class Meta():
-        ordering = ['productName']
+        ordering = ['name']
 
-class Brands(models.Model):
-    brandName = models.CharField(max_length=255)
-    brandImage = models.ImageField(upload_to='brands', blank=True)
+class Brand(models.Model):
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='brands', blank=True)
     def __str__(self) -> str:
-        return self.brandName
+        return self.name
     class Meta:
-        ordering = ['brandName']
+        ordering = ['name']
 
-class Banners(models.Model):
-    bannerImage = models.ImageField(upload_to='banners', blank=True)
-    bannerProduct = models.ForeignKey(Products, on_delete=models.CASCADE)
-    
-    class Meta():
-        ordering = ['bannerProduct']
+class Promotion(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    discount = models.PositiveSmallIntegerField()
+    isPercentage = models.BooleanField(default=False)
+    isActive = models.BooleanField(default=True)
 
-class Promotions(models.Model):
-    promotionName = models.CharField(max_length=255)
-    promotionDescription = models.TextField(blank=True)
-    promotionDiscount = models.PositiveSmallIntegerField()
-    promotionIsPercentage = models.BooleanField(default=False)
-    promotionIsActive = models.BooleanField(default=True)
-
-class ProductImages(models.Model):
-    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     imageOne = models.ImageField(upload_to='products', blank=True)
     imageTwo = models.ImageField(upload_to='products', blank=True)
     imageThree = models.ImageField(upload_to='products', blank=True)
@@ -74,21 +71,21 @@ class ProductImages(models.Model):
     imageTen = models.ImageField(upload_to='products', blank=True)
 
     def __str__(self) -> str:
-        return self.product.productName
+        return self.product.name
     
     class Meta():
         ordering = ['product']
 
-class FeaturedProducts(models.Model):
-    featuredProduct = models.ForeignKey(Products, on_delete=models.CASCADE)
-    featuredProductCreatedAt = models.DateTimeField(auto_now_add=True)
+class FeaturedProduct(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    createdAt = models.DateTimeField(auto_now_add=True)
     def __str__(self) -> str:
-        return self.featuredProduct.productName
+        return self.product.name
 
-class Customers(AbstractUser):
+class Customer(AbstractUser):
     # customerFirstName = models.CharField(max_length=255)
     # customerLastName = models.CharField(max_length=255)
-    customerEmail = models.EmailField(unique=True)
+    email = models.EmailField(unique=True)
     # customerPhone = models.CharField(max_length=255)
     # customerCreationDate = models.DateTimeField(auto_now_add=True)
     # customerIsVerified = models.BooleanField(default=False)
@@ -96,29 +93,64 @@ class Customers(AbstractUser):
     #     return f'{self.customerFirstName} {self.customerLastName}'
 
 class Cart(models.Model):
-    cartCreatedAt = models.DateTimeField(auto_now_add=True)
-    cartCustomer = models.ForeignKey(Customers, on_delete=models.CASCADE)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
-class Addresses(models.Model):
-    addressCustomer = models.ForeignKey(Customers, on_delete=models.PROTECT)
-    addressTitle = models.CharField(max_length=255)
-    addressLineOne = models.CharField(max_length=255)
-    addressLineTwo = models.CharField(max_length=255, blank=True)
-    addressDescription =  models.CharField(max_length=255, blank=True)
+class Address(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
+    title = models.CharField(max_length=255)
+    lineOne = models.CharField(max_length=255)
+    lineTwo = models.CharField(max_length=255, blank=True)
+    description =  models.CharField(max_length=255, blank=True)
 
 class WishList(models.Model):
-    wishListCustomer = models.ForeignKey(Customers, on_delete=models.PROTECT)
-    wishListProducts = models.ForeignKey(Products, on_delete=models.PROTECT)
-    wishListLikedDate = models.DateTimeField(auto_now=True)
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
+    products = models.ForeignKey(Product, on_delete=models.PROTECT)
+    likedDate = models.DateTimeField(auto_now=True)
     
     class Meta():
-        ordering = ['wishListProducts']
+        ordering = ['products']
 
 class PurchaseItem(models.Model):
-    purchaseItemCart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    purchaseItemProduct = models.ForeignKey(Products, on_delete=models.CASCADE)
-    purchaseItemQuantity = models.PositiveSmallIntegerField()
-    purchaseItemUnitPrice = models.DecimalField(max_digits=8, decimal_places=2)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField()
+    unitPrice = models.DecimalField(max_digits=8, decimal_places=2)
     
     class Meta():
-        ordering = ['purchaseItemCart']
+        ordering = ['cart']
+
+class BrandBanner(models.Model):
+    brand = models.ForeignKey(Brand, on_delete=models.PROTECT)
+    image = models.ImageField(upload_to='brand-banners')
+    name = models.CharField(max_length=255, blank=True)
+    def __str__(self) -> str:
+        return self.name
+
+class VideoBanner(models.Model):
+    url = models.URLField(max_length=300)
+    name = models.CharField(max_length=255, blank=True)
+    def __str__(self) -> str:
+        return self.name
+
+
+class AdBanner(models.Model):
+    url = models.URLField(max_length=300)
+    image =  models.ImageField(upload_to='ads-banners')
+    name = models.CharField(max_length=255, blank=True)
+    def __str__(self) -> str:
+        return self.name
+
+
+class ImageBanner(models.Model):
+    image = models.ImageField(upload_to='image-banner', blank=True)
+    name = models.CharField(max_length=255, blank=True)
+    def __str__(self) -> str:
+        return self.name
+
+    
+class ProductBanner(models.Model):
+    image = models.ImageField(upload_to='product-banner', blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    def __str__(self) -> str:
+        return self.product.name

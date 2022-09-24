@@ -53,12 +53,12 @@ class NotebookInline(admin.StackedInline):
     max_num = 1
 
 class ProductImagesInline(admin.StackedInline):
-    model = models.ProductImages
+    model = models.ProductImage
     extra = 0
     max_num = 1
 
 class AddressesInline(admin.StackedInline):
-    model = models.Addresses
+    model = models.Address
     extra = 0
     max_num: 1
 

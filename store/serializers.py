@@ -1,121 +1,145 @@
 from dataclasses import field
 from rest_framework import serializers
 from store.featureModel import *
-from store.models import Addresses, Brands, Cart, Customers, FeaturedProducts, Banners, Products, Collections, PurchaseItem, SubCollections, ProductImages, Promotions, WishList
+from store.models import *
 
-class CollectionSerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Collections
-        fields = ['id', 'collectionName', 'collectionImage']
+        model = Category
+        fields = ['id', 'name', 'image']
 
-class SubCollectionSerializer(serializers.ModelSerializer):
+class SubCategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = SubCollections
-        fields = ['id', 'subCollectionName', 'subCollectionMainCollection', 'subcollectionImage']
+        model = SubCategory
+        fields = ['id', 'name', 'category', 'image']
 
-class BrandsSerializer(serializers.Serializer):
-    model = Brands
-    fields = ['id', 'brandName', 'brandImage']
-
-class PromotionsSerializer(serializers.ModelSerializer):
+class BrandSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Promotions
-        fields = ['id', 'promotionName', 'promotionDescription', 'promotionDiscount', 'promotionIsPercentage', 'promotionIsActive' ]
+        model = Brand
+        fields = ['id', 'name', 'image']
 
-class FeaturedProductsSerializer(serializers.ModelSerializer):
+class PromotionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = FeaturedProducts
-        fields = ['id', 'featuredProduct' , 'featuredProductCreatedAt']
+        model = Promotion
+        fields = ['id', 'name', 'description', 'discount', 'isPercentage', 'isActive' ]
 
-class BannersSerializer(serializers.Serializer):
+class FeaturedProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Banners
-        fields = ['id', 'bannerImage', 'bannerProduct']
+        model = FeaturedProduct
+        fields = ['id', 'product' , 'createdAt']
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Products
-        fields = ['id', 'productName', 'productPrice', 'productSlug', 'productAvailability', 'productDescription', 'productSKU', 'productCollection', 'productSubCollection', 'productBrand', 'productModel', 'productLastUpdate']
+        model = Product
+        fields = ['id', 'name', 'price', 'afterPrice', 'isDiscount', 'isNew', 'slug', 'availability', 'description', 'sku', 'category', 'subCategory', 'brand', 'model', 'lastUpdate', 'rating']
 
 class ProductImagesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProductImages
+        model = ProductImage
         fields = ['id', 'product', 'imageOne', 'imageTwo', 'imageThree', 'imageFour', 'imageFive', 'imageSix', 'imageSeven', 'imageEight', 'imageNine', 'imageTen']
 
-class CustomersSerializer(serializers.ModelSerializer):
-    model = Customers
-    fields = ['id', 'customerFirstName', 'customerLastName', 'customerEmail', 'customerPhone', 'customerCreationDate', 'customerIsVerified']
+# class CustomersSerializer(serializers.ModelSerializer):
+#     model = Customer
+#     fields = ['id', 'customerFirstName', 'customerLastName', 'customerEmail', 'customerPhone', 'customerCreationDate', 'customerIsVerified']
 
 class AddressesSerializer(serializers.ModelSerializer):
-    model = Addresses
-    fields = ['id', 'addressCustomer','addressTitle', 'addressLineOne','addressLineTwo', 'addressDescription']
+    class Meta:
+        model = Address
+        fields = ['id', 'customer','title', 'lineOne','lineTwo', 'description']
 
 class WishListSerializer(serializers.ModelSerializer):
-    model = WishList
-    fields = ['id', 'wishListCustomer', 'wishListProducts', 'wishListLikedDate']
+    class Meta:
+        model = WishList
+        fields = ['id', 'customer', 'products', 'likedDate']
 
 class CartSerializer(serializers.ModelSerializer):
-    model = Cart
-    fields = ['id', 'CreatedAt', 'cartCustomer']
+    class Meta:
+        model = Cart
+        fields = ['id', 'CreatedAt', 'cartCustomer']
 
 class PurchaseItemSerializer(serializers.ModelSerializer):
-    model = PurchaseItem
-    fields = ['id', 'purchaseItemCart', 'purchaseItemProduct', 'purchaseItemQuantity', 'purchaseItemUnitPrice']
+    class Meta:
+        model = PurchaseItem
+        fields = ['id', 'cart', 'product', 'quantity', 'unitPrice']
 
 class ProductsFeatures(serializers.ModelField):
     id = serializers.IntegerField()
     productPrice = serializers.DecimalField(max_digits=8, decimal_places=2)
     price_with_tax = serializers.SerializerMethodField(method_name='calc_tax')
-    def calc_tax(self, product:Products):
+    def calc_tax(self, product:Product):
         return product.unit_price * 1.1
 
 class MonitorSerializer(serializers.ModelSerializer):
     class Meta:
         model = MonitorFeatures
-        fields = ['product', 'featureDisplayRes', 'featureScreenSize', 'featurePanelType', 'featureResponseTime', 'featureRefreshRate', 'featureFlatCurved']
+        fields = ['product', 'displayRes', 'screenSize', 'panelType', 'responseTime', 'refreshRate', 'flatCurved']
 
 class ProcessorSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcessorFeatures
-        fields = ['product', 'featureSocket', 'featureSeries', 'featureGeneration', 'featureCores']
+        fields = ['product', 'socket', 'series', 'generation', 'cores']
 
 class MotherBoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = MotherBoardFeatures
-        fields = ['product','featureSocket','featureSeries','featureGeneration','featureCores']
+        fields = ['product','socket','series','generation','fcores']
 
 class RamSerializer(serializers.ModelSerializer):
     class Meta:
         model= RamFeatures
-        fields = ['product','featureCapacity','featureMemoryType','featureSpeed']
+        fields = ['product','capacity','memoryType','speed']
 
 class PowerSupplySerializer(serializers.ModelSerializer):
     class Meta:
         model=PowerSupplyFeatures
-        fields=['product','featureWatt','featureRating','featureModular']
+        fields=['product','watt','rating','modular']
 
 class GraphicsCardSerializer(serializers.ModelSerializer):
     class Meta:
         model=GraphicsCardFeatures
-        fields=['product', 'featureChipset', 'featureGpuMemory']
+        fields=['product', 'chipset', 'gpuMemory']
 
 class CoolingSerializer(serializers.ModelSerializer):
     class Meta:
         model=CoolingFeatures
-        fields=['product', 'featurePcCooling']
+        fields=['product', 'pcCooling']
 
 class CaseSerializer(serializers.ModelSerializer):
     class Meta:
         model=CaseFeatures
-        fields=['product','featureWatt','featureCaseFans', 'bundled']
+        fields=['product','watt','caseFans', 'bundled']
 
 class StorageSerializer(serializers.ModelSerializer):
     class Meta:
         model=StorageFeatures
-        fields=['product', 'featureCapacity', 'featureFormfactor', 'featureInterface']
+        fields=['product', 'capacity', 'formfactor', 'interface']
 
 class NoteBookSerializer(serializers.ModelSerializer):
     class Meta:
-        model=NotebookFeatures
-        fields=['product', 'notebookDisplay', 'notebookGraphicsCard', 'notebookRam', 'notebookPanel', 'notebookProcessor', 'notebookRefreshRate', 'notebookStorage']
+        model= NotebookFeatures
+        fields=['product', 'display', 'graphicsCard', 'ram', 'panel', 'processor', 'refreshRate', 'storage']
 
+class ProductBannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductBanner
+        fields = ['id', 'image', 'product']
+
+class ImageBannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ImageBanner
+        fields = ['id', 'image', 'name']
+
+class AdBannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AdBanner
+        fields = ['id', 'name', 'image', 'url']
+
+class VideoBannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VideoBanner
+        fields = ['id', 'name', 'url']
+
+class BrandBannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BrandBanner
+        fields = ['id', 'name', 'image', 'brand']

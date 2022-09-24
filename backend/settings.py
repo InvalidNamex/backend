@@ -144,4 +144,4 @@ REST_FRAMEWORK = {
 }
 USE_DJANGO_JQUERY = True
 
-AUTH_USER_MODEL = 'store.Customers'
+AUTH_USER_MODEL = 'store.Customer'
