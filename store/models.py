@@ -14,7 +14,7 @@ class Category(models.Model):
 class SubCategory(models.Model):
     name = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
-    image = models.ImageField(upload_to='subCollection', blank=True)
+    image = models.ImageField(upload_to='sub-collections', blank=True)
     def __str__(self) -> str:
         return self.name
     class Meta:
@@ -128,7 +128,7 @@ class BrandBanner(models.Model):
         return self.name
 
 class VideoBanner(models.Model):
-    url = models.FileField(upload_to ='video-banners')
+    url = models.FileField(upload_to ='video-banners/')
     name = models.CharField(max_length=255, blank=True)
     def __str__(self) -> str:
         return self.name
