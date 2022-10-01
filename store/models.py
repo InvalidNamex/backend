@@ -128,7 +128,7 @@ class BrandBanner(models.Model):
         return self.name
 
 class VideoBanner(models.Model):
-    url = models.URLField(max_length=300)
+    url = models.FileField(upload_to ='video-banners')
     name = models.CharField(max_length=255, blank=True)
     def __str__(self) -> str:
         return self.name
