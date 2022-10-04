@@ -117,56 +117,56 @@ def checker(serializer, id):
         data = MonitorSerializer(features)
         x = serializer.data
         y = data.data
-        x.update({'MonitorFeatures': y})
+        x.update({'monitorFeatures': y})
         return x
     elif serializer.data['subCategory'] == 2:
         features = get_object_or_404(ProcessorFeatures, pk=id)
         data = ProcessorSerializer(features)
         x = serializer.data
         y = data.data
-        x.update({'ProcessorFeatures': y})
+        x.update({'processorFeatures': y})
         return x
     elif serializer.data['subCategory'] == 3:
         features = get_object_or_404(MotherBoardFeatures, pk=id)
         data = MotherBoardSerializer(features)
         x = serializer.data
         y = data.data
-        x.update({'MotherBoardFeatures': y})
+        x.update({'motherBoardFeatures': y})
         return x
     elif serializer.data['subCategory'] == 4:
         features = get_object_or_404(RamFeatures, pk=id)
         data = RamSerializer(features)
         x = serializer.data
         y = data.data
-        x.update({'RamFeatures': y})
+        x.update({'ramFeatures': y})
         return x
     elif serializer.data['subCategory'] == 5:
         features = get_object_or_404(PowerSupplyFeatures, pk=id)
         data = PowerSupplySerializer(features)
         x = serializer.data
         y = data.data
-        x.update({'PowerSupplyFeatures': y})
+        x.update({'powerSupplyFeatures': y})
         return x
     elif serializer.data['subCategory'] == 6:
         features = get_object_or_404(GraphicsCardFeatures, pk=id)
         data = GraphicsCardSerializer(features)
         x = serializer.data
         y = data.data
-        x.update({'GraphicsCardFeatures': y})
+        x.update({'graphicsCardFeatures': y})
         return x
     elif serializer.data['subCategory'] == 7:
         features = get_object_or_404(CoolingFeatures, pk=id)
         data = CoolingSerializer(features)
         x = serializer.data
         y = data.data
-        x.update({'CoolingFeatures': y})
+        x.update({'coolingFeatures': y})
         return x
     elif serializer.data['subCategory'] == 8:
         features = get_object_or_404(CaseFeatures, pk=id)
         data = CaseSerializer(features)
         x = serializer.data
         y = data.data
-        x.update({'CaseFeatures': y})
+        x.update({'caseFeatures': y})
         return x
     elif serializer.data['subCategory'] == 9:
         # This is for M.2 Only
@@ -174,14 +174,14 @@ def checker(serializer, id):
         data = StorageSerializer(features)
         x = serializer.data
         y = data.data
-        x.update({'StorageFeatures': y})
+        x.update({'storageFeatures': y})
         return x
     elif serializer.data['subCategory'] == 10:
         features = get_object_or_404(NotebookFeatures, pk=id)
         data = NoteBookSerializer(features)
         x = serializer.data
         y = data.data
-        x.update({'NotebookFeatures': y})
+        x.update({'notebookFeatures': y})
         return x
     else:
         return serializer.data
