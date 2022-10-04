@@ -32,13 +32,24 @@ SECRET_KEY = 'django-insecure-$+&h0h@n7z4&ns#9m$^e41-0qu787d)2-948v6t7j@9kxa%08l
 DEBUG = True
 
 ALLOWED_HOSTS = ['smartsolution.pythonanywhere.com', '*']
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 
-
+CORS_ALLOW_HEADERS = (
+    'content-disposition', 
+    'accept-encoding', 
+    'content-type', 
+    'accept', 
+    'origin', 
+    'authorization',
+    'cache-control'
+)
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'corsheaders',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -52,6 +63,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

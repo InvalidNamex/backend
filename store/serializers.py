@@ -36,7 +36,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductImagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
-        fields = ['id', 'product', 'imageOne', 'imageTwo', 'imageThree', 'imageFour', 'imageFive', 'imageSix', 'imageSeven', 'imageEight', 'imageNine', 'imageTen']
+        fields = ['imageOne', 'imageTwo', 'imageThree', 'imageFour', 'imageFive', 'imageSix', 'imageSeven', 'imageEight', 'imageNine', 'imageTen']
 
 # class CustomersSerializer(serializers.ModelSerializer):
 #     model = Customer
@@ -72,52 +72,52 @@ class ProductsFeatures(serializers.ModelField):
 class MonitorSerializer(serializers.ModelSerializer):
     class Meta:
         model = MonitorFeatures
-        fields = ['product', 'displayRes', 'screenSize', 'panelType', 'responseTime', 'refreshRate', 'flatCurved']
+        fields = ['displayRes', 'screenSize', 'panelType', 'responseTime', 'refreshRate', 'flatCurved']
 
 class ProcessorSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcessorFeatures
-        fields = ['product', 'socket', 'series', 'generation', 'cores']
+        fields = ['socket', 'series', 'generation', 'cores']
 
 class MotherBoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = MotherBoardFeatures
-        fields = ['product','socket','series','generation','fcores']
+        fields = ['socket','series','generation','fcores']
 
 class RamSerializer(serializers.ModelSerializer):
     class Meta:
         model= RamFeatures
-        fields = ['product','capacity','memoryType','speed']
+        fields = ['capacity','memoryType','speed']
 
 class PowerSupplySerializer(serializers.ModelSerializer):
     class Meta:
         model=PowerSupplyFeatures
-        fields=['product','watt','rating','modular']
+        fields=['watt','rating','modular']
 
 class GraphicsCardSerializer(serializers.ModelSerializer):
     class Meta:
         model=GraphicsCardFeatures
-        fields=['product', 'chipset', 'gpuMemory']
+        fields=['chipset', 'gpuMemory']
 
 class CoolingSerializer(serializers.ModelSerializer):
     class Meta:
         model=CoolingFeatures
-        fields=['product', 'pcCooling']
+        fields=['pcCooling']
 
 class CaseSerializer(serializers.ModelSerializer):
     class Meta:
         model=CaseFeatures
-        fields=['product','watt','caseFans', 'bundled']
+        fields=['watt','caseFans', 'bundled']
 
 class StorageSerializer(serializers.ModelSerializer):
     class Meta:
         model=StorageFeatures
-        fields=['product', 'capacity', 'formfactor', 'interface']
+        fields=['capacity', 'formfactor', 'interface']
 
 class NoteBookSerializer(serializers.ModelSerializer):
     class Meta:
         model= NotebookFeatures
-        fields=['product', 'display', 'graphicsCard', 'ram', 'panel', 'processor', 'refreshRate', 'storage']
+        fields=['display', 'graphicsCard', 'ram', 'panel', 'processor', 'refreshRate', 'storage']
 
 class ProductBannerSerializer(serializers.ModelSerializer):
     class Meta:
