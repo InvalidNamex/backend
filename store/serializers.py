@@ -31,12 +31,7 @@ class FeaturedProductSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'name', 'price', 'afterPrice', 'isDiscount', 'isNew', 'slug', 'availability', 'description', 'sku', 'category', 'subCategory', 'brand', 'model', 'lastUpdate', 'rating']
-
-class ProductImagesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProductImage
-        fields = ['imageOne', 'imageTwo', 'imageThree', 'imageFour', 'imageFive', 'imageSix', 'imageSeven', 'imageEight', 'imageNine', 'imageTen']
+        fields = ['id', 'name', 'price', 'afterPrice', 'isDiscount', 'isNew', 'slug', 'availability', 'description', 'sku', 'category', 'subCategory', 'brand', 'model', 'lastUpdate', 'rating', 'imageOne', 'imageTwo', 'imageThree', 'imageFour', 'imageFive', 'imageSix', 'imageSeven', 'imageEight', 'imageNine', 'imageTen']
 
 # class CustomersSerializer(serializers.ModelSerializer):
 #     model = Customer

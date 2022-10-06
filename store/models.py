@@ -36,6 +36,16 @@ class Product(models.Model):
     model = models.CharField(max_length=255, null=True, blank=True)
     lastUpdate = models.DateTimeField(auto_now=True)
     rating = models.SmallIntegerField()
+    imageOne = models.ImageField(upload_to='products', blank=True)
+    imageTwo = models.ImageField(upload_to='products', blank=True)
+    imageThree = models.ImageField(upload_to='products', blank=True)
+    imageFour = models.ImageField(upload_to='products', blank=True)
+    imageFive = models.ImageField(upload_to='products', blank=True)
+    imageSix = models.ImageField(upload_to='products', blank=True)
+    imageSeven = models.ImageField(upload_to='products', blank=True)
+    imageEight = models.ImageField(upload_to='products', blank=True)
+    imageNine = models.ImageField(upload_to='products', blank=True)
+    imageTen = models.ImageField(upload_to='products', blank=True)
     def __str__(self) -> str:
         return self.name
     
@@ -56,25 +66,6 @@ class Promotion(models.Model):
     discount = models.PositiveSmallIntegerField()
     isPercentage = models.BooleanField(default=False)
     isActive = models.BooleanField(default=True)
-
-class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    imageOne = models.ImageField(upload_to='products', blank=True)
-    imageTwo = models.ImageField(upload_to='products', blank=True)
-    imageThree = models.ImageField(upload_to='products', blank=True)
-    imageFour = models.ImageField(upload_to='products', blank=True)
-    imageFive = models.ImageField(upload_to='products', blank=True)
-    imageSix = models.ImageField(upload_to='products', blank=True)
-    imageSeven = models.ImageField(upload_to='products', blank=True)
-    imageEight = models.ImageField(upload_to='products', blank=True)
-    imageNine = models.ImageField(upload_to='products', blank=True)
-    imageTen = models.ImageField(upload_to='products', blank=True)
-
-    def __str__(self) -> str:
-        return self.product.name
-    
-    class Meta():
-        ordering = ['product']
 
 class FeaturedProduct(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

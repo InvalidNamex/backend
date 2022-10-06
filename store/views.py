@@ -59,7 +59,7 @@ def video_banner_list(request):
 @api_view(['GET'])
 def subCategory_products_list(request, id):
     queryset = Product.objects.all().filter(subCategory=id)
-    serializer = SubCategorySerializer(
+    serializer = ProductSerializer(
         queryset, many=True, context={'request': request})
     return Response(serializer.data)
 
@@ -104,12 +104,16 @@ def product_details(request, id):
     product = get_object_or_404(Product, pk=id)
     serializer = ProductSerializer(product, context={'request': request})
     x = checker(serializer, id)
-    images =  get_object_or_404(ProductImage, product=id)
-    imageSerializer = ProductImagesSerializer(images, context={'request': request})
-    y = imageSerializer.data
-    z = {k: v for k, v in y.items() if v}
-    x.update({'productImages': z})
-    return Response(x)
+    z = {k: v for k, v in x.items() if v}
+    return Response(z)
+
+# def getImages(request, x, id, i):
+#     images =  get_object_or_404(ProductImage, product=id)
+#     imageSerializer = ProductImagesSerializer(images, context={'request': request})
+#     y = imageSerializer.data
+#     z = {k: v for k, v in y.items() if v}
+#     x[i].update({'productImages': z})
+#     return x
 
 def checker(serializer, id):
     if serializer.data['subCategory'] == 1:

@@ -19,10 +19,10 @@ class BrandAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'afterPrice', 'isDiscount', 'isNew', 'slug', 'availability', 'description', 'sku', 'category', 'subCategory', 'brand', 'model', 'lastUpdate', 'rating']
+    list_display = ['name', 'price', 'afterPrice', 'isDiscount', 'isNew', 'slug', 'availability', 'description', 'sku', 'category', 'subCategory', 'brand', 'model', 'lastUpdate', 'rating', 'imageOne', 'imageTwo', 'imageThree', 'imageFour', 'imageFive', 'imageSix', 'imageSeven', 'imageEight', 'imageNine', 'imageTen']
     list_editable = ['price', 'availability', 'afterPrice', 'isDiscount', 'isNew']
     list_per_page: int = 10
-    inlines = [MonitorInline, ProcessorsInline, MotherBoardInline, RamInline, PowerSupplyInline, GraphicsCardInline, CoolingInline, CaseInline, StorageInline, NotebookInline, ProductImagesInline]
+    inlines = [MonitorInline, ProcessorsInline, MotherBoardInline, RamInline, PowerSupplyInline, GraphicsCardInline, CoolingInline, CaseInline, StorageInline, NotebookInline]
     list_select_related = ['subCategory']
     search_fields = ['name']
     

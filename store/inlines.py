@@ -51,11 +51,7 @@ class NotebookInline(admin.StackedInline):
     model = featureModel.NotebookFeatures
     extra = 0
     max_num = 1
-
-class ProductImagesInline(admin.StackedInline):
-    model = models.ProductImage
-    extra = 0
-    max_num = 1
+    
 
 class AddressesInline(admin.StackedInline):
     model = models.Address
